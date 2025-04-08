@@ -1,0 +1,74 @@
+name: Android Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+
+  gradleValidation:
+    name: Validate Gradle Wrapper
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+      - name: Validate Gradle Wrapper
+        uses: gradle/actions/wrapper-validation@v4
+
+  checks:
+    name: Run Checks
+    needs: gradleValidation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+      checks: write
+      pull-requests: write
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4.7.0
+        with:
+          distribution: zulu
+          java-version: 17
+      - name: Run Unit Tests
+        run: ./gradlew testDebugUnitTest --continue --stacktrace
+      - name: Publish Test Report
+        if: ${{ always() }}
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          check_name: "Unit Test Results"
+          files: '**/build/test-results/**/*.xml'
+      - name: Run Detekt
+        if: ${{ always() }}
+        run: ./gradlew detekt --stacktrace
+      - name: Generate Detekt Annotations
+        if: ${{ always() }}
+        uses: jwgmeligmeyling/checkstyle-github-action@master
+        with:
+          path: '**/detekt.xml'
+      - name: Run Lint
+        if: ${{ always() }}
+        run: ./gradlew lint --stacktrace
+      - name: Generate Lint Annotations
+        if: ${{ always() }}
+        uses: yutailang0119/action-android-lint@v4
+        with:
+          report-path: '**/build/reports/lint-results-*.xml'
+
+  assembleRelease:
+    name: Assemble Demo Application
+    needs: gradleValidation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4.7.0
+        with:
+          distribution: zulu
+          java-version: 17
+      - name: Assemble Debuggable Application
+        run: ./gradlew assembleDebug --stacktrace
