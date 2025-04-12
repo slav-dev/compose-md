@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dev_slav_compose_md_bullet_list_item_indicator">&#x2022;</string>
+    <string name="dev_slav_compose_md_ordered_list_item_indicator">%1$d.</string>
+</resources>

@@ -1,3 +1,8 @@
+complexity:
+  LongParameterList:
+    ignoreDefaultParameters: true
+  TooManyFunctions:
+    ignoreOverridden: true
 naming:
   FunctionNaming:
     ignoreAnnotated: ['Composable']

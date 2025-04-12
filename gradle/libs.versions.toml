@@ -1,13 +1,15 @@
 [versions]
 agp = "8.9.1"
 kotlin = "2.1.20"
-coreKtx = "1.15.0"
+coreKtx = "1.16.0"
 androidxJunit = "1.2.1"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.10.1"
-composeBom = "2025.03.01"
+composeBom = "2025.04.00"
+commonmark = "0.24.0"
 junit = "5.12.1"
+mockito = "5.16.1"
+mockitoKotlin = "5.4.0"
+assertj = "3.27.3"
 androidJUnit5 = "1.12.0.0"
 detekt = "1.23.8"
 
@@ -15,8 +17,6 @@ detekt = "1.23.8"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
-androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
@@ -27,15 +27,26 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-android = { group = "androidx.compose.ui", name = "ui-test-android" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
+commonmark = { group = "org.commonmark", name = "commonmark", version.ref = "commonmark" }
+
 junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
+junit-jupiter-params = { group = "org.junit.jupiter", name = "junit-jupiter-params", version.ref = "junit" }
 junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit" }
+
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockito-junit-jupiter = { group = "org.mockito", name = "mockito-junit-jupiter", version.ref = "mockito" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
+
+assertj-core = { group = "org.assertj", name = "assertj-core", version.ref = "assertj" }
 
 detekt-cli = { group = "io.gitlab.arturbosch.detekt", name = "detekt-cli", version.ref = "detekt" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 
 [bundles]
-androidx-ui = ["androidx-ui", "androidx-ui-graphics", "androidx-ui-tooling-preview", "androidx-material3"]
+androidx-ui = ["androidx-ui", "androidx-ui-graphics", "androidx-material3"]
 androidx-ui-debug = ["androidx-ui-tooling", "androidx-ui-test-manifest"]
+
+mockito = ["mockito-core", "mockito-junit-jupiter", "mockito-kotlin"]
 
 detekt = ["detekt-cli", "detekt-formatting"]
 
