@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.android.junit5)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.dokka.javadoc)
 }
 
 android {
@@ -33,6 +34,16 @@ android {
 detekt {
     buildUponDefaultConfig = true
     config.setFrom("$rootDir/config/detekt.yml")
+}
+
+dokka {
+    moduleName.set("${rootProject.name} ${project.name.replace('-', ' ')}")
+}
+
+tasks.register<Jar>("javadocJar") {
+    dependsOn(tasks.dokkaGeneratePublicationJavadoc)
+    from(tasks.dokkaGeneratePublicationJavadoc.flatMap { it.outputDirectory })
+    archiveClassifier.set("javadoc")
 }
 
 dependencies {

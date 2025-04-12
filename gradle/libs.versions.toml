@@ -12,6 +12,7 @@ mockitoKotlin = "5.4.0"
 assertj = "3.27.3"
 androidJUnit5 = "1.12.0.0"
 detekt = "1.23.8"
+dokka = "2.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -60,3 +61,5 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "androidJUnit5"}
 
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+
+dokka-javadoc = { id = "org.jetbrains.dokka-javadoc", version.ref = "dokka" }
