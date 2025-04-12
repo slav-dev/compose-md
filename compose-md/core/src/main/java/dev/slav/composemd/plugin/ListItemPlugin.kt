@@ -13,7 +13,7 @@ import org.commonmark.Extension
 import org.commonmark.node.ListItem
 import org.commonmark.node.Node
 
-class ListItemPlugin : MdPlugin<ListItem> {
+internal class ListItemPlugin : MdPlugin<ListItem> {
 
     private val componentFactory: MdComponentFactory<ListItem> =
         MdComponentFactory("ComposeMd.ListItem") { listItem ->

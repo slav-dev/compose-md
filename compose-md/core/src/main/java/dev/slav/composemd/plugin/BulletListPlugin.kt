@@ -19,7 +19,7 @@ import org.commonmark.Extension
 import org.commonmark.node.BulletList
 import org.commonmark.node.Node
 
-class BulletListPlugin : MdPlugin<BulletList> {
+internal class BulletListPlugin : MdPlugin<BulletList> {
 
     private val componentFactory: MdComponentFactory<BulletList> =
         MdComponentFactory("ComposeMd.BulletList") { bulletList ->

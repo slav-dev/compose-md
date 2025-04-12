@@ -19,7 +19,7 @@ import org.commonmark.Extension
 import org.commonmark.node.Node
 import org.commonmark.node.OrderedList
 
-class OrderedListPlugin : MdPlugin<OrderedList> {
+internal class OrderedListPlugin : MdPlugin<OrderedList> {
 
     private val componentFactory: MdComponentFactory<OrderedList> =
         MdComponentFactory("ComposeMd.OrderedList") { orderedList ->
