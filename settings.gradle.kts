@@ -25,4 +25,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Compose.md"
 
-include(":app")
+include(":compose-md:core")
+
+include(":previews")

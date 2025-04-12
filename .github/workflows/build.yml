@@ -59,7 +59,7 @@ jobs:
           report-path: '**/build/reports/lint-results-*.xml'
 
   assembleRelease:
-    name: Assemble Demo Application
+    name: Assemble Library
     needs: gradleValidation
     runs-on: ubuntu-latest
     steps:
@@ -70,5 +70,5 @@ jobs:
         with:
           distribution: zulu
           java-version: 17
-      - name: Assemble Debuggable Application
-        run: ./gradlew assembleDebug --stacktrace
+      - name: Assemble Library
+        run: ./gradlew assembleRelease --stacktrace
