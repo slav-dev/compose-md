@@ -1,6 +1,6 @@
 package dev.slav.composemd.previews
 
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -21,7 +21,7 @@ fun MdLazyColumnPreview() {
             MdLazyColumn(
                 markdown = previewMarkdown,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .padding(16.dp)
             )
         }
