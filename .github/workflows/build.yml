@@ -76,7 +76,7 @@ jobs:
 
   publishSnapshot:
     name: Publish Snapshot
-#    if: (github.event_name != 'pull_request') && (github.ref == 'refs/heads/main')
+    if: (github.event_name != 'pull_request') && (github.ref == 'refs/heads/main')
     needs: gradleValidation
     runs-on: ubuntu-latest
     env:
