@@ -103,7 +103,7 @@ jobs:
 
   properties:
     name: Export Properties
-    if: (github.event_name != 'pull_request')
+    if: (github.event_name != 'pull_request') && (github.ref == 'refs/heads/main')
     needs: gradleValidation
     runs-on: ubuntu-latest
     outputs:
