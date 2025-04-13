@@ -13,6 +13,7 @@ assertj = "3.27.3"
 androidJUnit5 = "1.12.0.0"
 detekt = "1.23.8"
 dokka = "2.0.0"
+changelog = "2.2.0"
 jreleaser = "1.17.0"
 
 [libraries]
@@ -66,3 +67,5 @@ android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "android
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 dokka-javadoc = { id = "org.jetbrains.dokka-javadoc", version.ref = "dokka" }
+
+changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
