@@ -100,3 +100,56 @@ jobs:
         run: ./gradlew clean publish -PprojectVersionSuffix="SNAPSHOT" --stacktrace
       - name: Publish Snapshots to Maven Central
         run: ./gradlew jreleaserFullRelease -PprojectVersionSuffix="SNAPSHOT" --stacktrace
+
+  properties:
+    name: Export Properties
+    if: (github.event_name != 'pull_request') && (github.ref == 'refs/heads/main')
+    needs: gradleValidation
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.properties.outputs.version }}
+      changelog: ${{ steps.properties.outputs.changelog }}
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4.2.1
+        with:
+          distribution: zulu
+          java-version: 17
+      - name: Export Properties
+        id: properties
+        shell: bash
+        run: |
+          PROPERTIES="$(./gradlew properties --console=plain -q)"
+          VERSION="$(echo "$PROPERTIES" | grep "^version:" | cut -f2- -d ' ')"
+          CHANGELOG="$(./gradlew getChangelog --unreleased --no-header --console=plain -q)"
+          CHANGELOG="${CHANGELOG//'%'/'%25'}"
+          CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
+          CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
+          echo "::set-output name=version::$VERSION"
+          echo "::set-output name=changelog::$CHANGELOG"
+
+  releaseDraft:
+    name: Draft New Release
+    if: (github.event_name != 'pull_request') && (github.ref == 'refs/heads/main')
+    needs: properties
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+      - name: Remove Old Release Drafts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api repos/{owner}/{repo}/releases \
+            --jq '.[] | select(.draft == true) | .id' \
+            | xargs -I '{}' gh api -X DELETE repos/{owner}/{repo}/releases/{}
+      - name: Create Release Draft
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.properties.outputs.version }}
+          name: v${{ needs.properties.outputs.version }}
+          body: ${{ needs.properties.outputs.changelog }}
+          draft: true
+          token: ${{ secrets.GITHUB_TOKEN }}
