@@ -8,6 +8,11 @@ plugins {
     alias(libs.plugins.dokka.javadoc) apply false
 }
 
+val projectVersion: String by project
+val projectVersionSuffix: String by project
+
 subprojects {
     group = "dev.slav.composemd"
+    version = if (projectVersionSuffix.isBlank()) projectVersion else "$projectVersion-$projectVersionSuffix"
+    description = "${rootProject.name} ${project.name.replace('-', ' ')}"
 }
