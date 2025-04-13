@@ -18,3 +18,4 @@
   - code blocks
   - HTML (not recommended, limited Markdown support inside inline HTML)
   - thematic breaks
+  - images (with `plugin-image`)

@@ -8,6 +8,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextDecoration
+import dev.slav.composemd.ComposeMd
 import dev.slav.composemd.link.MdLinkHandler
 import dev.slav.composemd.ui.style.MdTypography
 import org.assertj.core.api.Assertions.assertThat
@@ -28,6 +29,9 @@ import org.mockito.kotlin.whenever
 @DisplayName("MdAnnotatedStringVisitor")
 @ExtendWith(MockitoExtension::class)
 class MdAnnotatedStringVisitorTest {
+
+    @Mock
+    lateinit var composeMd: ComposeMd
 
     @Spy
     lateinit var annotatedStringBuilder: AnnotatedString.Builder

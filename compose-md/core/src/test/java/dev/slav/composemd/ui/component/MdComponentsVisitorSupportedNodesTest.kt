@@ -1,6 +1,6 @@
 package dev.slav.composemd.ui.component
 
-import dev.slav.composemd.plugin.MdPlugin
+import dev.slav.composemd.ComposeMd
 import org.assertj.core.api.Assertions.assertThat
 import org.commonmark.node.BlockQuote
 import org.commonmark.node.BulletList
@@ -24,11 +24,11 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.ParameterizedTest.ARGUMENTS_PLACEHOLDER
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.never
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
@@ -38,11 +38,9 @@ import org.mockito.kotlin.whenever
 class MdComponentsVisitorSupportedNodesTest {
 
     @Mock
-    lateinit var matchingPlugin: MdPlugin<Node>
+    lateinit var composeMd: ComposeMd
 
-    @Mock
-    lateinit var notMatchingPlugin: MdPlugin<Node>
-
+    @InjectMocks
     lateinit var classUnderTest: MdComponentsVisitor
 
     @Mock
@@ -50,10 +48,7 @@ class MdComponentsVisitorSupportedNodesTest {
 
     @BeforeEach
     fun initVisitor() {
-        whenever(notMatchingPlugin.accepts(any())) doReturn false
-        whenever(matchingPlugin.accepts(any())) doReturn true
-        whenever(matchingPlugin.create(any())) doReturn component
-        classUnderTest = MdComponentsVisitor(listOf(notMatchingPlugin, matchingPlugin))
+        whenever(composeMd.createComponent(any())) doReturn component
     }
 
     @ParameterizedTest(
@@ -74,25 +69,13 @@ class MdComponentsVisitorSupportedNodesTest {
     @ParameterizedTest(
         name = "GIVEN $ARGUMENTS_PLACEHOLDER, " +
             "WHEN it accepts the visitor, " +
-            "THEN a component should be created for that $ARGUMENTS_PLACEHOLDER by matching plugin"
+            "THEN a component should be created for that $ARGUMENTS_PLACEHOLDER"
     )
     @MethodSource("provideSupportedNodes")
     fun createdForNodeByMatchingPlugin(node: Node) {
         node.accept(classUnderTest)
 
-        verify(matchingPlugin, times(1)).create(node)
-    }
-
-    @ParameterizedTest(
-        name = "GIVEN $ARGUMENTS_PLACEHOLDER, " +
-            "WHEN it accepts the visitor, " +
-            "THEN no components should be created by not matching plugin"
-    )
-    @MethodSource("provideSupportedNodes")
-    fun notCreatedByNotMatchingPlugin(node: Node) {
-        node.accept(classUnderTest)
-
-        verify(notMatchingPlugin, never()).create(any())
+        verify(composeMd, times(1)).createComponent(node)
     }
 
     companion object {

@@ -1,19 +1,25 @@
 package dev.slav.composemd.ui.text
 
+import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.LinkInteractionListener
 import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
+import dev.slav.composemd.ComposeMd
 import dev.slav.composemd.link.MdLinkHandler
+import dev.slav.composemd.ui.component.MdComponent
 import dev.slav.composemd.ui.style.MdTypography
 import org.commonmark.node.AbstractVisitor
 import org.commonmark.node.Code
+import org.commonmark.node.CustomNode
 import org.commonmark.node.Emphasis
 import org.commonmark.node.HardLineBreak
 import org.commonmark.node.HtmlInline
+import org.commonmark.node.Image
 import org.commonmark.node.Link
+import org.commonmark.node.Node
 import org.commonmark.node.SoftLineBreak
 import org.commonmark.node.StrongEmphasis
 import org.commonmark.node.Text
@@ -22,15 +28,25 @@ import org.commonmark.node.Text
  * Visitor responsible for appending stylised spans
  * from Markdown nodes to [AnnotatedString].
  *
+ * @param composeMd Compose.md engine used to create inline components.
  * @param annotatedStringBuilder AnnotatedString builder.
  * @param typography Markdown typography styles.
  * @param linkHandler Markdown link URL handler.
  */
 class MdAnnotatedStringVisitor(
+    private val composeMd: ComposeMd,
     private val annotatedStringBuilder: AnnotatedString.Builder,
     private val typography: MdTypography,
     linkHandler: MdLinkHandler
 ) : AbstractVisitor() {
+
+    private val _inlineComponents = mutableMapOf<String, MdComponent<*>>()
+
+    /**
+     * Inline components built by this visitor.
+     */
+    val inlineComponents: Map<String, MdComponent<*>>
+        get() = _inlineComponents.toMap()
 
     private val linkInteractionListener = LinkInteractionListener { annotation ->
         val link = when (annotation) {
@@ -42,6 +58,14 @@ class MdAnnotatedStringVisitor(
     }
 
     private val htmlBuilder = HtmlBuilder()
+
+    private fun <T : Node> createInlineComponent(node: T?): String? =
+        node?.let(composeMd::createComponent)
+            ?.let { component ->
+                val componentId = java.util.UUID.randomUUID().toString()
+                _inlineComponents[componentId] = component
+                return@let componentId
+            }
 
     override fun visit(text: Text?) {
         val literal = text?.literal.orEmpty()
@@ -129,6 +153,35 @@ class MdAnnotatedStringVisitor(
             htmlBuilder.appendTag(HARD_LINE_BREAK_TEXT_HTML)
         } else {
             annotatedStringBuilder.append(HARD_LINE_BREAK_TEXT_MD)
+        }
+    }
+
+    override fun visit(image: Image?) {
+        val contentDescription = image?.title ?: image?.destination ?: "[Image]"
+        if (htmlBuilder.isBuilding) {
+            htmlBuilder.appendText(contentDescription)
+        } else {
+            val imageId = createInlineComponent(image)
+            if (imageId != null) {
+                annotatedStringBuilder.appendInlineContent(
+                    id = imageId,
+                    alternateText = contentDescription
+                )
+            } else {
+                annotatedStringBuilder.append(contentDescription)
+            }
+        }
+    }
+
+    override fun visit(customNode: CustomNode?) {
+        if (htmlBuilder.isCompleted) {
+            val contentId = createInlineComponent(customNode)
+            if (contentId != null) {
+                annotatedStringBuilder.appendInlineContent(
+                    id = contentId,
+                    alternateText = ""
+                )
+            }
         }
     }
 

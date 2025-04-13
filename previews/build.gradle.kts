@@ -36,6 +36,7 @@ detekt {
 
 dependencies {
     implementation(project(":compose-md:core"))
+    implementation(project(":compose-md:plugin-image"))
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.androidx.ui)

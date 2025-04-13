@@ -26,5 +26,6 @@ dependencyResolutionManagement {
 rootProject.name = "Compose.md"
 
 include(":compose-md:core")
+include(":compose-md:plugin-image")
 
 include(":previews")

@@ -23,6 +23,7 @@ Currently, the library supports:
 - code blocks
 - HTML (not recommended, limited Markdown support inside inline HTML)
 - thematic breaks
+- images (with `plugin-image`)
 
 ## Gradle Configuration
 
@@ -34,13 +35,19 @@ composeMd = "LATEST_VERSION"
 
 [libraries]
 composemd-core = { group = "dev.slav.composemd", name = "core", version.ref = "composeMd" }
+
+# And selected plugins:
+composemd-plugin-image = { group = "dev.slav.composemd", name = "core", version.ref = "composeMd" }
+
+[bundles]
+composemd = ["composemd-core", "composemd-plugin-image"]
 ```
 
 Use the dependency in your app’s `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation(libs.composemd.core)
+    implementation(libs.bundles.composemd)
 }
 ```
 
@@ -49,6 +56,9 @@ Alternatively, if your project is not using TOML:
 ```kotlin
 dependencies {
     implementation("dev.slav.composemd:core:LATEST_VERSION")
+
+    // And selected plugins:
+    implementation("dev.slav.composemd:plugin-image:LATEST_VERSION")
 }
 ```
 
