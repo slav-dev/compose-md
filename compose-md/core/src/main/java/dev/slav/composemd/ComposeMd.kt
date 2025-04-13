@@ -52,11 +52,24 @@ class ComposeMd private constructor(
      * @return List of Markdown components.
      */
     fun createComponents(node: Node): List<MdComponent<*>> {
-        val visitor = MdComponentsVisitor(
-            plugins = plugins
-        )
+        val visitor = MdComponentsVisitor(composeMd = this)
         node.accept(visitor)
         return visitor.components
+    }
+
+    /**
+     * Create a single component rendering the given Markdown node.
+     *
+     * If the given node is not supported, this method returns `null`.
+     *
+     * @param node Markdown node to be rendered.
+     *
+     * @return A single Markdown component or `null`.
+     */
+    fun createComponent(node: Node): MdComponent<*>? {
+        return plugins
+            .firstOrNull { plugin -> plugin.accepts(node) }
+            ?.create(node)
     }
 
     /**

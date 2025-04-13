@@ -1,6 +1,6 @@
 package dev.slav.composemd.ui.component
 
-import dev.slav.composemd.plugin.MdPlugin
+import dev.slav.composemd.ComposeMd
 import org.commonmark.node.AbstractVisitor
 import org.commonmark.node.BlockQuote
 import org.commonmark.node.BulletList
@@ -22,10 +22,10 @@ import org.commonmark.node.ThematicBreak
  * Visitor responsible for creating composable components
  * rendering Markdown nodes.
  *
- * @param plugins Compose.md plugins used to transform Markdown nodes.
+ * @param composeMd Compose.md engine.
  */
 class MdComponentsVisitor(
-    private val plugins: List<MdPlugin<*>>,
+    private val composeMd: ComposeMd
 ) : AbstractVisitor() {
 
     private val _components = mutableListOf<MdComponent<*>>()
@@ -36,16 +36,9 @@ class MdComponentsVisitor(
     val components: List<MdComponent<*>>
         get() = _components.toList()
 
-    private fun <T : Node> createComponent(node: T?): Boolean {
-        if (node == null) {
-            return false
-        }
-        val component = plugins
-            .firstOrNull { plugin -> plugin.accepts(node) }
-            ?.create(node)
-        if (component != null) {
-            _components += component
-        }
+    private fun createComponent(node: Node?): Boolean {
+        val component = node?.let(composeMd::createComponent)
+            ?.also { component -> _components += component }
         return component != null
     }
 

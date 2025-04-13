@@ -1,6 +1,7 @@
 package dev.slav.composemd.ui.component
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.geometry.Size
 import org.commonmark.node.Node
 
 /**
@@ -8,12 +9,14 @@ import org.commonmark.node.Node
  * rendering Markdown nodes of given type.
  *
  * @param type Type of the nodes rendered by components created by this factory.
+ * @param intrinsicSize Producer of intrinsic size of the component.
  * @param content Composable content of components created by this factory.
  *
  * @param T Type of the Markdown node.
  */
 class MdComponentFactory<T : Node>(
     private val type: String,
+    private val intrinsicSize: suspend (T) -> Size = { Size.Unspecified },
     private val content: @Composable (T) -> Unit
 ) {
 
@@ -27,6 +30,7 @@ class MdComponentFactory<T : Node>(
     fun create(node: T): MdComponent<T> =
         MdComponent(
             type = type,
+            intrinsicSize = intrinsicSize,
             node = node,
             content = this.content
         )
