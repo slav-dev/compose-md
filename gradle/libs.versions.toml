@@ -13,6 +13,7 @@ assertj = "3.27.3"
 androidJUnit5 = "1.12.0.0"
 detekt = "1.23.8"
 dokka = "2.0.0"
+jreleaser = "1.17.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +43,8 @@ assertj-core = { group = "org.assertj", name = "assertj-core", version.ref = "as
 
 detekt-cli = { group = "io.gitlab.arturbosch.detekt", name = "detekt-cli", version.ref = "detekt" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
+
+jreleaser-gradle-plugin = { group = "org.jreleaser", name = "jreleaser-gradle-plugin", version.ref = "jreleaser" }
 
 [bundles]
 androidx-ui = ["androidx-ui", "androidx-ui-graphics", "androidx-material3"]

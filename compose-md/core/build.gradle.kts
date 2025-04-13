@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.android.junit5)
     alias(libs.plugins.detekt)
     alias(libs.plugins.dokka.javadoc)
+    id("publish-aar-convention")
 }
 
 android {
@@ -28,6 +29,12 @@ android {
 
     buildFeatures {
         compose = true
+    }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
     }
 }
 
