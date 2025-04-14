@@ -1,0 +1,16 @@
+name: Pull Request Build
+
+on:
+  pull_request:
+
+jobs:
+  validateGradle:
+    uses: slav-dev/.workflows/gradle-validate-wrapper.yml
+  runChecks:
+    needs: validateGradle
+    uses: slav-dev/.workflows/android-check.yml
+  assembleRelease:
+    needs: validateGradle
+    uses: slav-dev/.workflows/android-assemble.yml
+    with:
+      variant: Release
