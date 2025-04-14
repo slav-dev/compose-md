@@ -2,9 +2,9 @@
 
 Composable Markdown library for Android.
 
-![Last Commit][badge-last-commit]
+[![Last Commit][badge-last-commit]][composemd-commits]
 
-![Main Branch Build][badge-main-status]
+[![Main Branch Build][badge-main-status]][composemd-actions]
 
 ## Supported Features
 
@@ -66,7 +66,7 @@ dependencies {
 
 ### Snapshots
 
-![Maven Snapshot][badge-snapshot]
+[![Maven Snapshot][badge-snapshot]][maven-central-snapshots]
 
 To use snapshots, add the following repository in your `settings.gradle.kts`:
 ```kotlin
@@ -143,14 +143,18 @@ MdLazyColumn(
 
 ## Licenses
 
-![BSD-3-Clause License][badge-license]
+[![BSD-3-Clause License][badge-license]][composemd-license]
 
 ### 3rd Party Licenses
 
 Compose.md uses 3rd party libraries that may be licensed differently.
 
-- [commonmark-java]: ![BSD-2-Clause License][commonmark-java-license]
+- [commonmark-java]: [![BSD-2-Clause License][commonmark-java-badge-license]][commonmark-java-license]
 
+
+[composemd-commits]: https://github.com/slav-dev/compose-md/commits/main/
+[composemd-actions]: https://github.com/slav-dev/compose-md/actions
+[composemd-license]: https://github.com/slav-dev/compose-md/blob/main/LICENSE
 
 [badge-last-commit]: https://img.shields.io/github/last-commit/slav-dev/compose-md/main?style=flat
 [badge-main-status]: https://img.shields.io/github/check-runs/slav-dev/compose-md/main?style=flat&label=main
@@ -159,6 +163,8 @@ Compose.md uses 3rd party libraries that may be licensed differently.
 [badge-license]: https://img.shields.io/github/license/slav-dev/compose-md?style=flat
 
 [maven-central-search]: https://central.sonatype.com/search?namespace=dev.slav.composemd&sort=name
+[maven-central-snapshots]: https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/dev/slav/composemd/
 
 [commonmark-java]: https://github.com/commonmark/commonmark-java
-[commonmark-java-license]: https://img.shields.io/github/license/commonmark/commonmark-java?style=flat
+[commonmark-java-license]: https://github.com/commonmark/commonmark-java/blob/main/LICENSE.txt
+[commonmark-java-badge-license]: https://img.shields.io/github/license/commonmark/commonmark-java?style=flat
