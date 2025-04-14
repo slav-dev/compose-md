@@ -5,12 +5,12 @@ on:
 
 jobs:
   validateGradle:
-    uses: slav-dev/.workflows/gradle-validate-wrapper.yml
+    uses: slav-dev/.workflows/gradle-validate-wrapper.yml@main
   runChecks:
     needs: validateGradle
-    uses: slav-dev/.workflows/android-check.yml
+    uses: slav-dev/.workflows/android-check.yml@main
   assembleRelease:
     needs: validateGradle
-    uses: slav-dev/.workflows/android-assemble.yml
+    uses: slav-dev/.workflows/android-assemble.yml@main
     with:
       variant: Release
