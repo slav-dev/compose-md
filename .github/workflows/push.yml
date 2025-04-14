@@ -17,5 +17,8 @@ jobs:
     name: Draft Release
     permissions:
       contents: write
+      discussions: write
     needs: validateGradle
     uses: slav-dev/.workflows/.github/workflows/gradle-draft-release.yml@main
+    with:
+      discussion_category_name: Announcements
