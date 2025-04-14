@@ -1,0 +1,24 @@
+name: Pull Request Build
+
+on:
+  pull_request:
+
+jobs:
+  validateGradle:
+    name: Validate Gradle Wrapper
+    uses: slav-dev/.workflows/.github/workflows/gradle-validate-wrapper.yml@main
+  runChecks:
+    name: Run Checks
+    permissions:
+      contents: read
+      issues: read
+      checks: write
+      pull-requests: write
+    needs: validateGradle
+    uses: slav-dev/.workflows/.github/workflows/android-check.yml@main
+  assembleRelease:
+    name: Assemble Release
+    needs: validateGradle
+    uses: slav-dev/.workflows/.github/workflows/android-assemble.yml@main
+    with:
+      variant: Release
