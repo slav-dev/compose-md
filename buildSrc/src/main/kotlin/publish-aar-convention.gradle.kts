@@ -1,4 +1,5 @@
 import org.jreleaser.model.Active
+import org.jreleaser.model.api.deploy.maven.MavenCentralMavenDeployer
 
 plugins {
     `maven-publish`
@@ -74,24 +75,25 @@ jreleaser {
                 create("snapshots") {
                     active.set(Active.SNAPSHOT)
                     url.set("https://central.sonatype.com/repository/maven-snapshots/")
+                    sign.set(true)
+                    verifyPom.set(false)
+                    snapshotSupported.set(true)
+                    stagingRepository("build/staging-deploy")
+                    verifyUrl.set("https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/{{path}}/{{filename}}")
                     snapshotUrl.set("https://central.sonatype.com/repository/maven-snapshots/")
                     closeRepository.set(true)
                     releaseRepository.set(true)
-                    sign.set(true)
-                    stagingRepository("build/staging-deploy")
-                    snapshotSupported.set(true)
-                    verifyPom.set(false)
-                    verifyUrl.set("https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/{{path}}/{{filename}}")
                 }
             }
             mavenCentral {
                 create("sonatype") {
                     active.set(Active.RELEASE)
                     url.set("https://central.sonatype.com/api/v1/publisher")
-                    stagingRepository("build/staging-deploy")
                     verifyPom.set(false)
-                    retryDelay.set(30)
-                    maxRetries.set(120)
+                    stagingRepository("build/staging-deploy")
+                    stage.set(MavenCentralMavenDeployer.Stage.UPLOAD)
+                    retryDelay.set(10)
+                    maxRetries.set(180)
                 }
             }
         }
