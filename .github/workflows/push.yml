@@ -3,7 +3,6 @@ name: Push Build
 on:
   push:
     branches: [ main ]
-  pull_request: # TODO: DELETE THIS LINE
 
 jobs:
   validateGradle:
