@@ -1,0 +1,24 @@
+name: Release Build
+
+on:
+  release:
+    types: [prereleased, released]
+
+jobs:
+  validateGradle:
+    name: Validate Gradle Wrapper
+    uses: slav-dev/.workflows/.github/workflows/gradle-validate-wrapper.yml@main
+  publishRelease:
+    name: Publish to Maven Central
+    secrets: inherit
+    needs: validateGradle
+    uses: slav-dev/.workflows/.github/workflows/gradle-publish.yml@main
+  patchChangelog:
+    name: Patch Changelog
+    if: ${{ !github.event.release.prerelease }}
+    permissions:
+      contents: write
+    needs: publishRelease
+    uses: slav-dev/.workflows/.github/workflows/gradle-patch-changelog.yml@main
+    with:
+      tag_name: ${{ github.event.release.tag_name }}
