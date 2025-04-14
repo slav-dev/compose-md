@@ -27,6 +27,8 @@ Currently, the library supports:
 
 ## Gradle Configuration
 
+[![Maven Central Version][badge-version]][maven-central-search]
+
 Define the dependency in your `gradle/libs.versions.toml`:
 
 ```toml
@@ -152,8 +154,11 @@ Compose.md uses 3rd party libraries that may be licensed differently.
 
 [badge-last-commit]: https://img.shields.io/github/last-commit/slav-dev/compose-md/main?style=flat
 [badge-main-status]: https://img.shields.io/github/check-runs/slav-dev/compose-md/main?style=flat&label=main
+[badge-version]: https://img.shields.io/maven-central/v/dev.slav.composemd/core?style=flat
 [badge-snapshot]: https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fcentral.sonatype.com%2Frepository%2Fmaven-snapshots%2Fdev%2Fslav%2Fcomposemd%2Fcore%2Fmaven-metadata.xml&style=flat&label=snapshot
 [badge-license]: https://img.shields.io/github/license/slav-dev/compose-md?style=flat
+
+[maven-central-search]: https://central.sonatype.com/search?namespace=dev.slav.composemd&sort=name
 
 [commonmark-java]: https://github.com/commonmark/commonmark-java
 [commonmark-java-license]: https://img.shields.io/github/license/commonmark/commonmark-java?style=flat
