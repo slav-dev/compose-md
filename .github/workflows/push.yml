@@ -11,6 +11,7 @@ jobs:
     uses: slav-dev/.workflows/.github/workflows/gradle-validate-wrapper.yml@main
   publishSnapshot:
     name: Publish Snapshot
+    secrets: inherit
     needs: validateGradle
     uses: slav-dev/.workflows/.github/workflows/gradle-snapshot.yml@main
   draftRelease:
