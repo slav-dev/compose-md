@@ -1,0 +1,21 @@
+name: Push Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request: # TODO: DELETE THIS LINE
+
+jobs:
+  validateGradle:
+    name: Validate Gradle Wrapper
+    uses: slav-dev/.workflows/.github/workflows/gradle-validate-wrapper.yml@main
+  publishSnapshot:
+    name: Publish Snapshot
+    needs: validateGradle
+    uses: slav-dev/.workflows/.github/workflows/gradle-snapshot.yml@main
+  draftRelease:
+    name: Draft Release
+    permissions:
+      contents: write
+    needs: validateGradle
+    uses: slav-dev/.workflows/.github/workflows/gradle-draft-release.yml@main
