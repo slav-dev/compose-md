@@ -135,6 +135,8 @@ jobs:
     if: (github.event_name != 'pull_request') && (github.ref == 'refs/heads/main')
     needs: properties
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Fetch Sources
         uses: actions/checkout@v4
