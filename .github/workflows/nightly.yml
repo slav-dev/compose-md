@@ -1,0 +1,22 @@
+name: Nightly Build
+
+on:
+  schedule:
+    - cron: "0 5 * * *"
+
+jobs:
+  countCommits:
+    name: Count Commits Last 25h
+    uses: slav-dev/.workflows/.github/workflows/git-count-commits.yml@main
+    with:
+      time: 90000
+  validateGradle:
+    name: Validate Gradle Wrapper
+    if: ${{ needs.countCommits.outputs.commitsCount > 0 }}
+    needs: countCommits
+    uses: slav-dev/.workflows/.github/workflows/gradle-validate-wrapper.yml@main
+  publishSnapshot:
+    name: Publish Snapshot
+    secrets: inherit
+    needs: validateGradle
+    uses: slav-dev/.workflows/.github/workflows/gradle-snapshot.yml@main
