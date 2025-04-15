@@ -1,10 +1,14 @@
+[![Last Commit][badge-last-commit]][composemd-commits]
+[![Main Branch Build][badge-main-status]][composemd-actions]
+[![Latest Release][badge-version]][composemd-version]
+
 # Compose.md
 
 Composable Markdown library for Android.
 
-[![Last Commit][badge-last-commit]][composemd-commits]
-
-[![Main Branch Build][badge-main-status]][composemd-actions]
+[![Android][android-badge]][android]
+[![Jetpack Compose][jetpack-compose-badge]][jetpack-compose]
+[![Markdown][markdown-badge]][markdown]
 
 ## Supported Features
 
@@ -27,7 +31,7 @@ Currently, the library supports:
 
 ## Gradle Configuration
 
-[![Maven Central Version][badge-version]][maven-central-search]
+[![Maven Central Version][badge-maven-central]][maven-central-search]
 
 Define the dependency in your `gradle/libs.versions.toml`:
 
@@ -158,16 +162,27 @@ Compose.md uses 3rd party libraries that may be licensed differently.
 
 [composemd-commits]: https://github.com/slav-dev/compose-md/commits/main/
 [composemd-actions]: https://github.com/slav-dev/compose-md/actions
+[composemd-version]: https://github.com/slav-dev/compose-md/releases
 [composemd-license]: https://github.com/slav-dev/compose-md/blob/main/LICENSE
 
 [badge-last-commit]: https://img.shields.io/github/last-commit/slav-dev/compose-md/main?style=for-the-badge
 [badge-main-status]: https://img.shields.io/github/check-runs/slav-dev/compose-md/main?style=for-the-badge&label=main
-[badge-version]: https://img.shields.io/maven-central/v/dev.slav.composemd/core?style=for-the-badge
+[badge-version]: https://img.shields.io/github/v/release/slav-dev/compose-md?include_prereleases&style=for-the-badge&label=version
+[badge-maven-central]: https://img.shields.io/maven-central/v/dev.slav.composemd/core?style=for-the-badge
 [badge-snapshot]: https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fcentral.sonatype.com%2Frepository%2Fmaven-snapshots%2Fdev%2Fslav%2Fcomposemd%2Fcore%2Fmaven-metadata.xml&style=for-the-badge&label=snapshot
 [badge-license]: https://img.shields.io/github/license/slav-dev/compose-md?style=for-the-badge
 
 [maven-central-search]: https://central.sonatype.com/search?namespace=dev.slav.composemd&sort=name
 [maven-central-snapshots]: https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/dev/slav/composemd/
+
+[android]: https://developer.android.com/
+[android-badge]: https://img.shields.io/badge/Android-8A2BE2?style=for-the-badge&logo=android&color=gray
+
+[jetpack-compose]: https://developer.android.com/compose
+[jetpack-compose-badge]: https://img.shields.io/badge/Jetpack_Compose-8A2BE2?style=for-the-badge&logo=jetpackcompose&color=gray
+
+[markdown]: https://en.wikipedia.org/wiki/Markdown
+[markdown-badge]: https://img.shields.io/badge/Markdown-8A2BE2?style=for-the-badge&logo=markdown&color=gray
 
 [commonmark-java]: https://github.com/commonmark/commonmark-java
 [commonmark-java-license]: https://github.com/commonmark/commonmark-java/blob/main/LICENSE.txt
